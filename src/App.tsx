@@ -13,6 +13,8 @@ import { BrowserRouter } from "react-router-dom";
 import Header from "./containers/Header";
 import LoginButtons from "./components/LoginButtons";
 import CartButton from "./components/CartButton";
+
+
 type State = {
   currentCurrency: string;
   theme: "light" | "dark";
@@ -24,7 +26,7 @@ class App extends React.Component<{}, State> {
     return (
       <BrowserRouter>
         <Header theme={theme}>
-          <CartButton />
+          {/* <CartButton /> */}
           <ThemeSwitch themeChange={(theme) => this.setState({ theme })} />
           <Currency theme={theme} />
           <LoginButtons />

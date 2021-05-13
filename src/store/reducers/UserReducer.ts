@@ -16,6 +16,8 @@ function userReducer(
       return { error: null, user: action.user };
     case UserActions.ActionTypes.SIGN_IN_ERROR:
       return { user: null, error: action.error };
+    case UserActions.ActionTypes.Reg_ERROR:
+      return { user: null, error: action.error };
     case UserActions.ActionTypes.SIGN_OUT:
       return initialState;
     default:

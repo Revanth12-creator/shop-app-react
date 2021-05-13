@@ -13,6 +13,7 @@ import { StoreType } from "../types";
 import LoadingWrapper from "../components/LoadingWrapper";
 import formatter from "../utils/formatter";
 import LoadingActions from "../store/actions/LoadingActions";
+
 type LoginProps = {
   signinSuccess: (user: object) => void;
   signinError: (error: string) => void;
@@ -33,12 +34,14 @@ class Login extends React.Component<LoginProps, LoginState> {
       await StorageService.storeData("token", data.access_token);
       this.props.signinSuccess(data); // create/store session
       this.props.hideLoader();
+
     } catch (e) {
       this.props.signinError(formatter.titlecase(e.message.toString()));
       this.props.hideLoader();
     }
   };
   render() {
+    console.log(this.props.signinError)
     if (this.props.isAuthenticated) {
       let lastPage = "/"; // by default home page
       const state: any = this.props.location.state;

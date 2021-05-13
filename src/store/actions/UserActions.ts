@@ -1,6 +1,7 @@
 const ActionTypes = {
   SIGN_IN_SUCCESS: "[User] Login success",
   SIGN_IN_ERROR: "[User] Login error",
+  Reg_ERROR: "[User] Register error",
   SIGN_OUT: "[User] Logout",
 };
 
@@ -16,9 +17,17 @@ const loginError = (error: string) => {
     error,
   };
 };
+
+const registerError = (error: string) => {
+  return {
+    type: ActionTypes.Reg_ERROR,
+    error,
+  };
+};
+
 const logout = () => {
   return { type: ActionTypes.SIGN_OUT };
 };
 
-const UserActions = { loginError, loginSuccess, logout, ActionTypes };
+const UserActions = { loginError, loginSuccess, registerError, logout, ActionTypes };
 export default UserActions;

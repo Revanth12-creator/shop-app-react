@@ -7,6 +7,7 @@ import Cart from "./containers/Cart";
 import Login from "./containers/Login";
 import ProductDetail from "./containers/ProductDetail";
 import ProductList from "./containers/ProductList";
+import Register from "./containers/Register";
 import Demo from "./Demo";
 //import Profile from './containers/Profile';
 
@@ -23,6 +24,7 @@ const AppRouter: React.FC = (props) => {
             <PrivateRoute path={"/profile"} component={LazyProfile} />
             <Route path={"/productdetail/:id"} component={ProductDetail} />
             <Route path={"/cart"} component={Cart} />
+            <Route path={"/register"} component={Register} />
             {/* 404 Route */}
             <Route component={ErrorPage} />
           </Switch>

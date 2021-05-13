@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps, NavLink } from "react-router-dom";
 import Column from "../components/Column";
 import ImageWithFallback from "../components/ImageWithFallback";
 import Row from "../components/Row";
@@ -8,11 +8,55 @@ import Row from "../components/Row";
 import { CartType, StoreType } from "../types";
 import formatter from "../utils/formatter";
 import Container from "../components/Container";
+import { type } from "os";
+import { count } from "console";
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 type Props = {
     cartItem: CartType[];
 } & RouteComponentProps;
-class Cart extends Component<Props> {
+
+type State = {
+    count: number,
+    deleteCartData: any,
+    qty: any
+}
+class Cart extends Component<Props, State> {
+    state: State = {
+        count: 0,
+        deleteCartData: this.props.cartItem,
+        qty: 0
+    }
+
+    mapQuantity = () => {
+        this.props.cartItem.map((val) => {
+            const pQty = val.productQty;
+            this.setState({
+                qty: (pQty)
+            })
+        })
+    }
+    // incrementQty = () => {
+    //     this.setState({
+    //         qty: (this.state.qty + 1)
+    //     });
+    // }
+    decrementQty = () => {
+        this.setState({
+            count: (this.state.count - 1)
+        })
+    }
+
+    deleteItem = () => {
+        console.log(this.props.cartItem);
+        const delteData = this.props.cartItem;
+        delteData.pop();
+        this.setState({
+            deleteCartData: (delteData)
+        })
+    }
+
     render() {
+        console.log("initial", this.state.qty)
         return (
             <Container>
                 <Row>
@@ -22,52 +66,61 @@ class Cart extends Component<Props> {
                         </div>
                     </Column>
                 </Row>
-                <div>
-                    {this.props.cartItem.map((val) => (
+                <Row>
+                    {this.props.cartItem.map((data) => (
                         <Column
-                            size={2}
+                            size={4}
                             classes={
-                                "d-flex justify-content-between align-items-center mt-1 shadow-lg ms-1 h-75 w-75 mb-6"
+                                "d-flex justify-content-between align-items-center mt-1 shadow-lg ms-1  w-100 "
                             }
                         >
-                            <Link to={`/productdetail/${val.productId}`}>
+                            <Link to={`/productdetail/${data.productId}`}>
                                 <ImageWithFallback
-                                    source={val.productImage}
-                                    classList={"w-75 h-75 img-thumbnail rounded float-start"}
-
+                                    source={data.productImage}
+                                    classList={" img-thumbnail rounded float-start"}
                                 />
                             </Link>
                             <div className="d-flex  align-items-center flex-column col-md-">
                                 <h5 className="my-5 mb-5 display-6 text-center text-secondary fw-bold " >
-                                    {formatter.titlecase(val.productName)}
+                                    {formatter.titlecase(data.productName)}
                                 </h5>
 
-                                <p className=" text-success  display-7 fw-bold">Sale Price:   <i className="fas fa-rupee-sign text-danger "></i> {val.productSalePrice}</p>
+                                <p className=" text-success  display-7 fw-bold">Sale Price:   <i className="fas fa-rupee-sign text-danger "></i> {data.productSalePrice}</p>
                                 <div className="d-flex">
                                     <div >
-                                        <p className=" display-5 my-5 pt-0 pb-0 fw-bold p-1 bg-success rounded">+</p>
+
+                                        <button className="btn btn-primary  fw-bold" onClick={this.mapQuantity}>+</button>
                                     </div>
-                                    <div className="m-5">
-                                        <p className="mb-5 display-6 fw-bold"> 2</p>
+                                    <div className="m-2">
+                                        <p className="mb-5 display-7 fw-bold"> {this.state.qty}</p>
+                                        {/* <p className="mb-5 display-7 fw-bold">intial {data.productQty}</p> */}
                                     </div>
                                     <div>
-                                        <p className=" display-5 ml-5 my-5 pt-0 pb-0 fw-bold p-1 bg-info  rounded">-</p>
+
+                                        <button className="btn btn-info fw-bold" onClick={this.decrementQty}>-</button>
                                     </div>
                                 </div>
-                                <p className="mb-5 text-danger  display-6 ">Total Prize:   <i className="fas fa-rupee-sign text-success "></i> {val.productPrice}</p>
-
+                                <p className="mb-5 text-danger  display-6 ">Total Prize:   <i className="fas fa-rupee-sign text-success "></i> {data.productPrice}</p>
                             </div>
-                            <div className="btn d-flex align-items-start flex-column">
-                                <div className="my-5 p-2 pb-0 mb-1 bg-dark text-warning rounded">
-                                    <p><i className="fas fa-trash display-6  "></i></p>
 
-                                </div>
+                            <div className="mt-5  pb-0 mb-1 bg-dark text-warning rounded ">
+                                <button className="btn btn-info fw-bold" onClick={this.deleteItem}><i className="fas fa-trash display-7"></i></button>
                             </div>
+
+                            <div className="btn d-flex align-items-start flex-column"></div>
+                            {/* <NavLink to={"/payment"}>
+
+                                <button className="btn btn-success p-3">Proced To Check Out</button>
+
+                            </NavLink> */}
+
                         </Column>
                     ))}
 
+                </Row>
+                <div className='align-items-center'>
+                    <button className="btn btn-success p-3">Proced To Check Out</button>
                 </div>
-
             </Container>
         );
     }
