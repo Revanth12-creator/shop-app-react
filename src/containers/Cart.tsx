@@ -1,162 +1,3 @@
-// import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import { Link, RouteComponentProps, NavLink } from "react-router-dom";
-// import Column from "../components/Column";
-// import ImageWithFallback from "../components/ImageWithFallback";
-// import Row from "../components/Row";
-
-// import { CartType, StoreType } from "../types";
-// import formatter from "../utils/formatter";
-// import Container from "../components/Container";
-// import { type } from "os";
-// import { count } from "console";
-// import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
-// type Props = {
-//     cartItem: CartType[];
-// } & RouteComponentProps;
-
-// type State = {
-//     count: number,
-//     deleteCartData: any,
-//     change: boolean
-// }
-// class Cart extends Component<Props, State> {
-//     state: State = {
-//         count: 0,
-//         deleteCartData: this.props.cartItem,
-//         change: false,
-//     }
-
-//     // mapQuantity = () => {
-//     //     this.props.cartItem.map((val) => {
-//     //         const pQty = val.productQty;
-//     //         this.setState({
-//     //             qty: (pQty)
-//     //         })
-//     //     })
-//     // }
-//     // incrementQty = () => {
-//     //     this.setState({
-//     //         count: (this.state.count + 1)
-//     //     });
-//     // }
-//     // decrementQty = () => {
-//     //     this.setState({
-//     //         count: (this.state.count - 1)
-//     //     })
-//     // }
-
-//     deleteItem = () => {
-//         console.log(this.props.cartItem);
-//         const delteData = this.props.cartItem;
-//         delteData.pop();
-//         this.setState({
-//             deleteCartData: (delteData)
-//         })
-//     }
-
-//     render() {
-//         let allData: any = [];
-//         const decrementQty = (e: any) => {
-//             let dataForFilter = allData.map((data: any, index: number, arr: any) => {
-//                 if (JSON.parse(e.target.value) === JSON.parse(data.productId)) {
-//                     data.productQty = JSON.parse(data.productQty) - 1;
-//                 }
-//             });
-//             this.setState({ change: true });
-//         };
-
-//         const incrementQty = (e: any) => {
-//             allData.map((data: any, index: number, arr: any) => {
-//                 if (JSON.parse(e.target.value) === JSON.parse(data.productId)) {
-//                     data.productQty = JSON.parse(data.productQty) + 1;
-//                 }
-//             });
-//             this.setState({ change: true });
-//         };
-
-
-//         return (
-//             <Container>
-//                 <Row>
-//                     <Column size={8}>
-//                         <div className="jumbotron text-center">
-//                             <h1 className="display-5 fw-bold text-primary">CART LIST</h1>
-//                         </div>
-//                     </Column>
-//                 </Row>
-//                 <Row>
-//                     <div className="col-md-8">
-//                         {this.props.cartItem.map((data) => (
-//                             <Column
-//                                 size={4}
-//                                 classes={
-//                                     "d-flex justify-content-between align-items-center mt-1 shadow-lg ms-1  w-100 "
-//                                 }
-//                             >
-//                                 <Link to={`/productdetail/${data.productId}`}>
-//                                     <div className="col-md-8">
-//                                         <ImageWithFallback
-//                                             source={data.productImage}
-//                                             classList={" img-thumbnail rounded float-start"}
-//                                         />
-//                                     </div>
-//                                 </Link>
-//                                 <div className="d-flex  align-items-center flex-column col-md-">
-//                                     <h5 className="my-5 mb-5 display-6 text-center text-secondary fw-bold " >
-//                                         {formatter.titlecase(data.productName)}
-//                                     </h5>
-
-//                                     <p className=" text-success  display-7 fw-bold">Sale Price:   <i className="fas fa-rupee-sign text-danger "></i> {data.productSalePrice}</p>
-//                                     <div className="d-flex">
-//                                         <div >
-
-//                                             <button className="btn btn-primary  fw-bold" value={data.productId} onClick={incrementQty}>+</button>
-//                                         </div>
-//                                         <div className="m-2">
-//                                             <p className="mb-5 display-7 fw-bold">  {data.productQty}</p>
-//                                             {/* <p className="mb-5 display-7 fw-bold">intial {data.productQty}</p> */}
-//                                         </div>
-//                                         <div>
-
-//                                             <button className="btn btn-info fw-bold" value={data.productId} onClick={decrementQty}>-</button>
-//                                         </div>
-//                                     </div>
-//                                     <p className="mb-5 text-danger  display-6 ">Total Prize:   <i className="fas fa-rupee-sign text-success "></i> {data.productPrice}</p>
-//                                 </div>
-
-//                                 <div className="mt-5  pb-0 mb-1 bg-dark text-warning rounded ">
-//                                     <button className="btn btn-info fw-bold" onClick={this.deleteItem}><i className="fas fa-trash display-7"></i></button>
-//                                 </div>
-
-//                                 <div className="btn d-flex align-items-start flex-column"></div>
-//                                 {/* <NavLink to={"/payment"}>
-
-//                                 <button className="btn btn-success p-3">Proced To Check Out</button>
-
-//                             </NavLink> */}
-
-//                             </Column>
-//                         ))}
-//                     </div>
-//                 </Row>
-//                 <NavLink to={"/payment"}>
-//                     <div className='align-items-center'>
-//                         <button className="btn btn-success p-3">Proced To Check Out</button>
-//                     </div>
-//                 </NavLink>
-//             </Container>
-//         );
-//     }
-// }
-
-// const mapStoreDataToProps = (state: StoreType) => {
-//     return {
-//         cartItem: state.cart,
-//     };
-// };
-
-// export default connect(mapStoreDataToProps)(Cart);
 
 import axios from "axios";
 import React from "react";
@@ -168,22 +9,30 @@ import { CartType } from "../types";
 import { BrowserRouter, NavLink, Redirect, useHistory } from "react-router-dom";
 import Container from "../components/Container";
 import Row from "../components/Row";
+import { Dispatch } from "redux";
+import CartActions from "../store/actions/CartActions";
 
 type Props = {
     cartItems: any,
-    deleteCartData: any,
+    //deleteCartData: any,
+    btnClick: () => void;
+    deleteCartData: (id: number) => void;
 } & RouteComponentProps;
 type State = {};
 
 class Cart extends React.Component<Props, State> {
     state = { change: false, reRender: false, deleteCartData: this.props.cartItems };
-    deleteItem = () => {
-        console.log(this.props.cartItems);
-        const delteData = this.props.cartItems;
-        delteData.pop();
-        this.setState({
-            deleteCartData: (delteData)
-        })
+    // deleteItem = () => {
+    //     console.log(this.props.cartItems);
+    //     const delteData = this.props.cartItems;
+    //     delteData.pop();
+    //     this.setState({
+    //         deleteCartData: (delteData)
+    //     })
+    // }
+    removeFormCart(id: number) {
+        this.props.deleteCartData(id); // add to cart logic
+        //this.props.history.push("/cart"); // redirect to cart page
     }
 
     render() {
@@ -239,7 +88,7 @@ class Cart extends React.Component<Props, State> {
         };
         const redirecting = () => {
             if (this.state.reRender === true) {
-                return <Redirect to="/checkout" />;
+                return <Redirect to="/payment" />;
             }
         };
 
@@ -314,7 +163,8 @@ class Cart extends React.Component<Props, State> {
                                             </div >
                                             <td>
                                                 <div className="mt-5  pb-0 mb-1  rounded ">
-                                                    <button className="btn btn-info fw-bold" onClick={this.deleteItem}><i className="fas fa-trash display-7"></i></button>
+                                                    {/* click={() => this.props.deleteCartData(data.productId)} */}
+                                                    <button className="btn btn-info fw-bold" ><i className="fas fa-trash display-7"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -323,9 +173,9 @@ class Cart extends React.Component<Props, State> {
                             </tbody>
                         </table>
                         <div>
-                            <p className={"totalProductPrice"}  >
+                            <h2 className={"totalProductPrice"}   >
                                 Total Product Price <b>INR {allTotalAmount}</b>
-                            </p>
+                            </h2>
                         </div>
 
 
@@ -347,5 +197,9 @@ const mapStoreToProps = (store: CartType) => {
         cartItems: store,
     };
 };
-
-export default connect(mapStoreToProps, null)(Cart);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        deleteCartData: (id: number) => dispatch(CartActions.removeItem(id)),
+    };
+};
+export default connect(mapStoreToProps, mapDispatchToProps)(Cart);
