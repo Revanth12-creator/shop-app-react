@@ -22,5 +22,5 @@ const getData = (key: string) => {
   });
 };
 
-const clearAll =() => sessionStorage.clear()
+const clearAll = () => sessionStorage.clear()
 export default { storeData, getData, clearAll };

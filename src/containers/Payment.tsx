@@ -9,14 +9,7 @@ export class Payment extends React.Component {
     register = async (e: SyntheticEvent) => {
         try {
             e.preventDefault();
-            // const { name, email, password, } = this.state;
-            // const { data } = await UserService.register(name, email, password);
-            // this.props.showLoader();
-            // this.props.hideLoader();
-            // this.props.history.push('/login')
         } catch (e) {
-            // this.props.registerError(formatter.titlecase(e.message.toString()));
-            // this.props.hideLoader();
             console.log(e)
         }
     };
@@ -26,13 +19,13 @@ export class Payment extends React.Component {
                 <Container>
                     <Row>
                         <Column size={12}>
-                            <h2 className=" bg-info text-light fw-bold fs-3 p-2 text-center   mb-3">
+                            <h2 className="  text-dark fw-bold fs-3 p-2 text-center   mb-3">
                                 Billing Details
                             </h2>
                             <Row>
-                                <Column size={6} classes="bg-light">
+                                <Column size={5} classes="bg-light">
                                     <form onSubmit={this.register}
-                                        className="needs-validation border border-5 p-4 shadow-lg  rounded fw-bold"
+                                        className="needs-validation border  p-4 shadow-lg  rounded "
                                         noValidate
                                     >
                                         Name:
@@ -41,7 +34,7 @@ export class Payment extends React.Component {
                                      <input
                                             type="email"
                                             className="form-control"
-                                            placeholder="abc@xyz.com"
+                                            placeholder="Email"
                                             required
                                         />
                                          Phone No.:
@@ -77,7 +70,7 @@ export class Payment extends React.Component {
                                              Debit/Credit Card Number
                                       <input type="number" className="form-control" required />
                                         <br />
-                                        <div className="d-flex">
+                                        <div className="">
                                             <label htmlFor="">Expiration:</label>
                                             <input
                                                 type="number"
@@ -121,3 +114,4 @@ export class Payment extends React.Component {
         );
     }
 }
+export default Payment;

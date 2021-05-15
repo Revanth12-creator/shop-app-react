@@ -1,0 +1,11 @@
+.form {
+    padding: 20px 0;
+    width: 30%;
+}
+
+.slidermain {   
+    width: 15%;
+    /* padding: 3px; */
+    background-color: aliceblue;
+    border-radius: 10px;
+}

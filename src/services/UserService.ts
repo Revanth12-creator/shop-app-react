@@ -1,4 +1,5 @@
 import axios from "axios";
+import { SyntheticEvent } from "react";
 import constants from "../constants";
 import { LoginResponseType } from "../types";
 import StorageService from './StorageService';
@@ -37,27 +38,17 @@ const address = () => {
   );
 };
 
-const addressPost = (address1: string, address2: string, city: string, state1: string, pincode: string) => {
+const addressPost = (line1: string, line2: string, city: string, state: string, pincode: string) => {
   const url = `${constants.BASE_URL}/address`;
-  // return axios
-  //   .post(url, { address1, address2, city, state1, pincode })
-  //   .catch((e) => Promise.reject(e.response.data));
   return StorageService.getData("token").then((token) =>
-    axios.post(url, {
+    axios.post(url, { line1, line2, city, state, pincode }, {
       headers: { Authorization: `Bearer ${token}`, },
-    }, {})
-  );
-};
-
-
-const deleteAddress = () => {
-  const url = `${constants.BASE_URL}/address`;
-  return StorageService.getData("token").then((token) =>
-    axios.delete(url, {
-      headers: { Authorization: `Bearer ${token}` },
     })
   );
 };
+
+
+
 
 const addressEdit = (address1: string, address2: string, city: string, state1: string, pincode: string) => {
   const url = `${constants.BASE_URL}/address`;
@@ -67,4 +58,4 @@ const addressEdit = (address1: string, address2: string, city: string, state1: s
 };
 
 
-export default { login, profile, register, address, addressPost, addressEdit, deleteAddress };
+export default { login, profile, register, address, addressPost, addressEdit };

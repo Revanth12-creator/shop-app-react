@@ -9,14 +9,15 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import CartActions from "../store/actions/CartActions";
 import Paginate from "../components/Paginate";
-
+import { Slider } from "@material-ui/core"
+import classes from "../components/Filter.module.css";
 type Props = {
   selectedCurrency: string;
   addItem: (product: ProductType) => void;
 } & RouteComponentProps;
-type State = { plist: ProductType[]; totalPages: number; pageNumber: number };
+type State = { plist: ProductType[]; totalPages: number; pageNumber: number, value: any, };
 class ProductList extends React.Component<Props, State> {
-  state: State = { plist: [], totalPages: 0, pageNumber: 1 };
+  state: State = { plist: [], totalPages: 0, pageNumber: 1, value: [0, 100000], };
   componentDidMount() {
     this.getData();
   }
@@ -40,27 +41,50 @@ class ProductList extends React.Component<Props, State> {
   }
   updateData = (page: number) =>
     this.setState({ pageNumber: page }, () => this.getData());
+
+
+  rangeSelector = (event: any, newValue: any) => {
+    this.setState({ value: newValue });
+  };
   render() {
     return (
-      <Row>
-        {this.state.plist.map((val) => (
-          <Column size={3} classes={"my-3"}>
-            <Product
-              btnClick={() => this.addToCart(val)}
-              pdata={val}
-              key={val.productId}
-              currencyCode={this.props.selectedCurrency}
+      <>
+        <div className={classes.slidermain}>
+          <Slider
+            max={100000}
+            value={this.state.value}
+            onChange={this.rangeSelector}
+            valueLabelDisplay="auto"
+          />
+          <h5 className="text-primary">
+            {this.state.value[0]}-{this.state.value[1]}
+          </h5>
+        </div>
+        <Row>
+
+
+          {this.state.plist.map((val) => JSON.parse(val.productSalePrice) > this.state.value[0] &&
+            JSON.parse(val.productSalePrice) < this.state.value[1] ? (
+            <Column size={3} classes={"my-3"}>
+              <Product
+                btnClick={() => this.addToCart(val)}
+                pdata={val}
+                key={val.productId}
+                currencyCode={this.props.selectedCurrency}
+              />
+            </Column>
+          ) : null
+          )}
+          <Column size={12} classes={"text-center"}>
+            <Paginate
+              itemCountPerPage={10}
+              totalPages={this.state.totalPages}
+              currentPage={this.state.pageNumber}
+              changePage={this.updateData}
             />
           </Column>
-        ))}
-        <Column size={12} classes={"text-center"}>
-          <Paginate
-            totalPages={this.state.totalPages}
-            currentPage={this.state.pageNumber}
-            changePage={this.updateData}
-          />
-        </Column>
-      </Row>
+        </Row>
+      </>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, Fragment } from "react";
-import { RouteComponentProps } from "react-router";
+import { Redirect, RouteComponentProps } from "react-router";
 import Column from "../components/Column";
 import Row from "../components/Row";
 import ProductService from "../services/ProductService";
@@ -24,22 +24,33 @@ type RegisterProps = {
     hideLoader: () => void;
 } & RouteComponentProps;
 type RegisterState = {
-    address1: string,
-    address2: string,
+    line1: string,
+    line2: string,
     city: string,
-    state1: string,
-    pincode: any
+    state: string,
+    pincode: any,
+    redirect: boolean
 };
 class Add extends React.Component<RegisterProps> {
-    state: RegisterState = { address1: "", address2: "", city: "", state1: "", pincode: '' };
+    state: RegisterState = { line1: "", line2: "", city: "", state: "", pincode: '', redirect: false };
     submitData = async (e: SyntheticEvent) => {
         try {
             e.preventDefault();
-            const { address1, address2, city, state1, pincode } = this.state;
-            const { data } = await UserService.addressPost(address1, address2, city, state1, pincode);
+            const { line1, line2, city, state, pincode } = this.state;
+            const { data } = await UserService.addressPost(line1, line2, city, state, pincode);
+            console.log("address", data)
             this.props.showLoader();
             this.props.hideLoader();
             this.props.history.push('/profile')
+            this.setState({
+                redirect: true,
+                line1: this.state.line1,
+                line2: this.state.line2,
+                city: this.state.city,
+                state: this.state.state,
+                pincode: this.state.pincode
+            })
+
         } catch (e) {
             this.props.addressError(formatter.titlecase(e.message.toString()));
             this.props.hideLoader();
@@ -47,7 +58,12 @@ class Add extends React.Component<RegisterProps> {
         }
     };
     render() {
-        console.log(this.props.errorMessage)
+        const redirecting = () => {
+            if (this.state.redirect === true) {
+                return <Redirect to="/payment" />;
+            }
+        };
+        console.log("state data", this.state)
         return (
             <Container>
                 <Row>
@@ -57,30 +73,31 @@ class Add extends React.Component<RegisterProps> {
                             <small className="text-danger">{this.props.errorMessage}</small>
                             <div className="card-body">
                                 <form onSubmit={this.submitData}>
+                                    {redirecting()}
                                     <TextBox
                                         placeholder={"Address1"}
                                         type={"text"}
-                                        textChange={(name) => this.setState({})}
+                                        textChange={(line1) => this.setState({ line1 })}
                                     />
                                     <TextBox
                                         placeholder={"Address2"}
                                         type={"text"}
-                                        textChange={(email) => this.setState({})}
+                                        textChange={(line2) => this.setState({ line2 })}
                                     />
                                     <TextBox
                                         placeholder={"city"}
                                         type={"text"}
-                                        textChange={(password) => this.setState({ password })}
+                                        textChange={(city) => this.setState({ city })}
                                     />
                                     <TextBox
                                         placeholder={"State"}
                                         type={"text"}
-                                        textChange={(password) => this.setState({ password })}
+                                        textChange={(state) => this.setState({ state })}
                                     />
                                     <TextBox
                                         placeholder={"Pincode"}
                                         type={"text"}
-                                        textChange={(password) => this.setState({ password })}
+                                        textChange={(pincode) => this.setState({ pincode })}
                                     />
                                     {/* <NavLink to={"/profile"}> */}
                                     <button className={"btn btn-dark w-100 text-uppercase"}>
