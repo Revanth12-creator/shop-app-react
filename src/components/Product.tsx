@@ -31,15 +31,30 @@ class Product extends React.Component<ProductProps> {
   }
   render() {
     const { pdata, wishlist, currencyCode } = this.props;
+    let salePrice: any = pdata.productPrice;
+    let totalSaleprice: any = pdata.productSalePrice;
     return (
       <div className="p-4 shadow-sm text-center">
         <Link to={`/productdetail/${pdata.productId}`}>
-          <ImageWithFallback classList={''} source={pdata.productImage} />
+          <ImageWithFallback classList={""} source={pdata.productImage} />
         </Link>
         <h5 className={"mt-4"}>{formatter.titlecase(pdata.productName)}</h5>
         <ProductPrice
-          price={pdata.productPrice}
-          salePrice={pdata.productSalePrice}
+          {...(currencyCode === "EUR"
+            ? ((salePrice = JSON.parse(pdata.productPrice) / 90),
+              (totalSaleprice = JSON.parse(pdata.productSalePrice) / 90))
+            : currencyCode === "USD"
+            ? ((salePrice = JSON.parse(pdata.productPrice) / 73),
+              (totalSaleprice = JSON.parse(pdata.productSalePrice) / 73))
+            : currencyCode === "CAD"
+            ? ((salePrice = JSON.parse(pdata.productPrice) / 60),
+              (totalSaleprice = JSON.parse(pdata.productSalePrice) / 60))
+            : currencyCode === "GBP"
+            ? ((salePrice = JSON.parse(pdata.productPrice) / 103),
+              (totalSaleprice = JSON.parse(pdata.productSalePrice) / 103))
+            : null)}
+          price={salePrice}
+          salePrice={totalSaleprice}
           code={currencyCode}
         />
         {/* <button>Add to {wishlist ? "Wishlist" : "Cart"}</button> */}

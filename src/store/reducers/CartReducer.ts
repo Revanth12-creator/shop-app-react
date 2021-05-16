@@ -11,25 +11,24 @@ function cartReducer(store: CartType[] = [], action: IAction) {
   switch (action.type) {
     case CartActions.ActionTypes.ADD_TO_CART:
       return [...store, { ...action.product, productQty: 1 }];
-    case CartActions.ActionTypes.REMOVE_ITEM:
 
     case CartActions.ActionTypes.REMOVE_ITEM:
-      return store.filter((prod) => prod.productId !== action.id);
+      return store.filter((product) => product.productId !== action.id);
 
     case CartActions.ActionTypes.INCREAMENT:
-      return (store.map((prod) => {
-        if (prod.productId === action.qtyId) {
-          prod.productQty++
+      return (store.map((product) => {
+        if (product.productId === action.qtyId) {
+          product.productQty++
         }
-        return prod
+        return product
       }));
 
     case CartActions.ActionTypes.DECREMENT:
-      return (store.map((prod) => {
-        if (prod.productId === action.id) {
-          prod.productQty--
+      return (store.map((product) => {
+        if (product.productId === action.qtyId) {
+          product.productQty--
         }
-        return prod
+        return product
       }));
 
     default:

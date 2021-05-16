@@ -1,13 +1,12 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Add from "./components/Add";
+import Add from "./containers/Add";
 import Container from "./components/Container";
 import ErrorPage from "./components/ErrorPage";
 import PrivateRoute from './components/PrivateRoute';
 import Cart from "./containers/Cart";
 import Checkout from "./containers/Checkout";
 import Login from "./containers/Login";
-import { Payment } from "./containers/Payment";
 import ProductDetail from "./containers/ProductDetail";
 import ProductList from "./containers/ProductList";
 import Register from "./containers/Register";
@@ -28,7 +27,6 @@ const AppRouter: React.FC = (props) => {
             <Route path={"/productdetail/:id"} component={ProductDetail} />
             <Route path={"/cart"} component={Cart} />
             <Route path={"/register"} component={Register} />
-            <Route path={"/payment"} component={Payment} />
             <Route path={"/add"} component={Add} />
             <Route path={"/checkout"} component={Checkout} />
             {/* 404 Route */}

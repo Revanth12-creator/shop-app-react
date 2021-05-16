@@ -25,10 +25,10 @@ const increaseQty = (qtyId: number) => {
     qtyId,
   }
 }
-const decrementQty = (id: number) => {
+const decrementQty = (qtyId: number) => {
   return {
     type: ActionTypes.DECREMENT,
-    id,
+    qtyId,
   }
 }
 export default { ActionTypes, addToCart, removeItem, increaseQty, decrementQty };

@@ -3,12 +3,12 @@ import { RouteComponentProps } from "react-router";
 import Column from "../components/Column";
 import Row from "../components/Row";
 import ProductService from "../services/ProductService";
-import ErrorBoundary from '../components/ErrorBoundary';
+import ErrorBoundary from "../components/ErrorBoundary";
 import ImageWithFallback from "../components/ImageWithFallback";
 
 type Props = {};
 type State = {
-  productList: any,
+  productList: any;
 };
 
 class ProductDetail extends React.Component<RouteComponentProps> {
@@ -19,8 +19,8 @@ class ProductDetail extends React.Component<RouteComponentProps> {
       const { data } = await ProductService.getProductById(params.id);
       console.log("success", data);
       this.setState({
-        productList: data
-      })
+        productList: data,
+      });
     } catch (e) {
       console.log("error", e);
     }
@@ -33,11 +33,15 @@ class ProductDetail extends React.Component<RouteComponentProps> {
             <div className="container ">
               <h2 className=" bg-danger text-light fw-bold fs-1 p-1 text-center  mb-3">
                 ORDER DETAILS
-               </h2>
+              </h2>
               <div className="row ">
                 <div className="col-md-4">
                   <div className="">
-                    <img src={this.state.productList.productImage} alt="img" className="rounded-circle  mx-auto" />
+                    <img
+                      src={this.state.productList.productImage}
+                      alt="img"
+                      className="rounded-circle  mx-auto"
+                    />
                   </div>
                   {/* <ImageWithFallback
                     // source={this.state.productList.productImage}
@@ -47,11 +51,38 @@ class ProductDetail extends React.Component<RouteComponentProps> {
                 </div>
                 <div className="col-md-8 p-5 ">
                   <div>
-                    <h1 className="fw-bold ">ID  : <span className="text-success"> {this.state.productList.productId}</span></h1>
-                    <h1 className="fw-bold ">Name  : <span className="text-success">{this.state.productList.productName} </span></h1>
-                    <h1 className="fw-bold ">Prize: <i className="fas fa-rupee-sign text-success "></i><span className="text-success">{this.state.productList.productPrice}</span> </h1>
-                    <h1 className="fw-bold ">Sale-Prize: <i className="fas fa-rupee-sign text-success "></i><span className="text-success">{this.state.productList.productSalePrice}</span> </h1>
-                    <h1 className="fw-bold ">Stock: <span className="text-success">{this.state.productList.productStock}</span> </h1>
+                    <h1 className="fw-bold ">
+                      ID :{" "}
+                      <span className="text-success">
+                        {" "}
+                        {this.state.productList.productId}
+                      </span>
+                    </h1>
+                    <h1 className="fw-bold ">
+                      Name :{" "}
+                      <span className="text-success">
+                        {this.state.productList.productName}{" "}
+                      </span>
+                    </h1>
+                    <h1 className="fw-bold ">
+                      Prize: <i className="fas fa-rupee-sign text-success "></i>
+                      <span className="text-success">
+                        {this.state.productList.productPrice}
+                      </span>{" "}
+                    </h1>
+                    <h1 className="fw-bold ">
+                      Sale-Prize:{" "}
+                      <i className="fas fa-rupee-sign text-success "></i>
+                      <span className="text-success">
+                        {this.state.productList.productSalePrice}
+                      </span>{" "}
+                    </h1>
+                    <h1 className="fw-bold ">
+                      Stock:{" "}
+                      <span className="text-success">
+                        {this.state.productList.productStock}
+                      </span>{" "}
+                    </h1>
                   </div>
                 </div>
               </div>

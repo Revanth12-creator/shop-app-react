@@ -48,14 +48,4 @@ const addressPost = (line1: string, line2: string, city: string, state: string, 
 };
 
 
-
-
-const addressEdit = (address1: string, address2: string, city: string, state1: string, pincode: string) => {
-  const url = `${constants.BASE_URL}/address`;
-  return axios
-    .patch(url, { address1, address2, city, state1, pincode })
-    .catch((e) => Promise.reject(e.response.data));
-};
-
-
-export default { login, profile, register, address, addressPost, addressEdit };
+export default { login, profile, register, address, addressPost,  };
