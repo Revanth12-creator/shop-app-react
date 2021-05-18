@@ -5,6 +5,8 @@ import UserService from "../services/UserService";
 import { Link, RouteComponentProps, NavLink } from "react-router-dom";
 import StorageService from "../services/StorageService";
 import axios from "axios";
+import constants from "../constants";
+
 type Props = {};
 type State = {
   userList: any;
@@ -38,13 +40,16 @@ class Profile extends React.Component<Props, State> {
     }
   };
   render() {
-    console.log(this.state.userList);
-    const deleteAddress = (e: any) => {
+    console.log("user", this.state.userList);
+    console.log("address", this.state.userList);
+
+    const deleteAddress = async (e: any) => {
       let deleteAddressId = e.target.value;
       console.log("id", deleteAddressId);
+      const url = `${constants.BASE_URL}/address/${deleteAddressId}`;
       return StorageService.getData("token").then((token) =>
         axios
-          .delete(` http://localhost:5000/address/${deleteAddressId}`, {
+          .delete(url, {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then(() => {
@@ -70,20 +75,27 @@ class Profile extends React.Component<Props, State> {
                 className="rounded-circle  mx-auto"
               />
             </div>
-            <h2 className="fw-bold text-center">
-              ID
-              <h4 className="display-9 text-warning">
-                {" "}
-                {this.state.userList.userId}
-              </h4>
-            </h2>
+
             <NavLink to={"/cart"}>
-              <button
-                type="button"
-                className="btn btn-info text-center rounded"
-              >
-                My Orders
-              </button>
+              <div className="mx-3">
+                <button
+                  type="button"
+                  className="btn btn-info text-center rounded"
+                >
+                  My Orders
+                </button>
+              </div>
+            </NavLink>
+
+            <NavLink to={"/resume"}>
+              <div className="mx-3">
+                <button
+                  type="button"
+                  className="btn btn-dark  text-light rounded"
+                >
+                  Upload Resume
+                </button>
+              </div>
             </NavLink>
           </div>
           <div className="col-md-8 p-5 ">

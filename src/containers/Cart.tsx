@@ -10,7 +10,8 @@ import Container from "../components/Container";
 import Row from "../components/Row";
 import { Dispatch } from "redux";
 import CartActions from "../store/actions/CartActions";
-
+import CartDesign from "../components/CartDesign";
+import UserService from "../services/UserService";
 type Props = {
   cartItems: CartType[];
   deleteCartData: (id: number) => void;
@@ -25,8 +26,12 @@ type State = {
 class Cart extends React.Component<Props, State> {
   state: State = { reRender: false, totalAmo: 0 };
 
+  deleteCartData(id: number) {
+    this.props.deleteCartData(id); // add to cart logic
+  }
   render() {
     console.log("total", this.state.totalAmo);
+
     const submit = (e: any) => {
       e.preventDefault();
       this.setState({
@@ -73,18 +78,17 @@ class Cart extends React.Component<Props, State> {
                 {this.props.cartItems.map((data: any, index: number) =>
                   data.productQty > 0 ? (
                     <tr key={data.productId}>
-                      <div className="">
-                        <td>
-                          <img
-                            src={data.productImage}
-                            className="col-md-3"
-                            alt="img"
-                          />
-                        </td>
-                      </div>
-                      <th className="fw-bold display-7" scope="row">
+                      <td>
+                        <img
+                          src={data.productImage}
+                          className="w-25 h-15"
+                          alt="img"
+                        />
+                      </td>
+
+                      <td className="fw-bold display-7" scope="row">
                         {index + 1}
-                      </th>
+                      </td>
                       <td className="fw-bold display-7">{data.productId}</td>
                       <td className="fw-bold display-7">{data.productName}</td>
                       <td className="fw-bold display-7">
@@ -99,7 +103,9 @@ class Cart extends React.Component<Props, State> {
                         >
                           +
                         </button>
-                        {data.productQty}
+                        <div className="card col-md-2 mx-3 ">
+                          {data.productQty}
+                        </div>
                         <button
                           className="btn btn-danger m-1"
                           onClick={() =>
@@ -119,7 +125,6 @@ class Cart extends React.Component<Props, State> {
                           }
                         </p>
                       </td>
-
                       <td>
                         <div className="mt-5  pb-0 mb-1  rounded ">
                           <button

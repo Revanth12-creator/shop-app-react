@@ -18,6 +18,7 @@ const LoginButtons: React.FC = (props) => {
         <Link className="btn btn-link" to={"/profile"}>
           Profile
         </Link>
+
         <button
           className="btn btn-sm btn-outline-primary mx-2"
           onClick={() => {
@@ -35,12 +36,11 @@ const LoginButtons: React.FC = (props) => {
     <div>
       <Link className="btn btn-sm btn-outline-primary mx-2" to={"/register"}>
         Register
-    </Link>
+      </Link>
       <Link className="btn btn-sm btn-outline-primary mx-2" to={"/login"}>
         Login
-    </Link>
+      </Link>
     </div>
-
   );
 };
 export default LoginButtons;

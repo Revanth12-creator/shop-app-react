@@ -48,4 +48,6 @@ const addressPost = (line1: string, line2: string, city: string, state: string, 
 };
 
 
-export default { login, profile, register, address, addressPost,  };
+
+
+export default { login, profile, register, address, addressPost };

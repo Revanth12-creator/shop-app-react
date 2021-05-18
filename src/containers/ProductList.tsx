@@ -11,7 +11,6 @@ import CartActions from "../store/actions/CartActions";
 import Paginate from "../components/Paginate";
 import LoadingWrapper from "../components/LoadingWrapper";
 import LoadingActions from "../store/actions/LoadingActions";
-import classes from "../components/Filter.module.css";
 import { Slider } from "@material-ui/core";
 
 type Props = {
@@ -139,7 +138,7 @@ class ProductList extends React.PureComponent<Props, State> {
             onChange={this.sortData}
           >
             <option value="" className="text-center">
-              Filter Product
+              Sort
             </option>
             <option value="PriceLowHigh">PriceLowToHigh</option>
             <option value="PriceHighLow">PriceHighToLow</option>

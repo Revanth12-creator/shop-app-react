@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Add from "./containers/Add";
 import Container from "./components/Container";
 import ErrorPage from "./components/ErrorPage";
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from "./components/PrivateRoute";
 import Cart from "./containers/Cart";
 import Checkout from "./containers/Checkout";
 import Login from "./containers/Login";
@@ -11,6 +11,7 @@ import ProductDetail from "./containers/ProductDetail";
 import ProductList from "./containers/ProductList";
 import Register from "./containers/Register";
 import Demo from "./Demo";
+import UploadeResume from "./containers/UploadeResume";
 //import Profile from './containers/Profile';
 
 const LazyProfile = React.lazy(() => import("./containers/Profile"));
@@ -29,6 +30,7 @@ const AppRouter: React.FC = (props) => {
             <Route path={"/register"} component={Register} />
             <Route path={"/add"} component={Add} />
             <Route path={"/checkout"} component={Checkout} />
+            <Route path={"/resume"} component={UploadeResume} />
             {/* 404 Route */}
             <Route component={ErrorPage} />
           </Switch>

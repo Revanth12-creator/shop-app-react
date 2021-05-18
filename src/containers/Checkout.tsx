@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, { Dispatch } from "react";
+import React from "react";
+import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import Column from "../components/Column";
@@ -53,6 +54,7 @@ class Checkout extends React.Component<Props, State> {
   render() {
     const submit = (e: any) => {
       e.preventDefault();
+
       this.setState({
         reRender: true,
         formData: this.state,
@@ -168,5 +170,12 @@ const mapStoreToProps = (state: StoreType) => {
     cartItems: state.cart,
   };
 };
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    addressError: (err: string) => dispatch(UserActions.addressError(err)),
+    hideLoader: () => dispatch(LoadingActions.hideLoader()),
+    showLoader: () => dispatch(LoadingActions.showLoader()),
+  };
+};
 
-export default connect(mapStoreToProps)(Checkout);
+export default connect(mapStoreToProps, mapDispatchToProps)(Checkout);
