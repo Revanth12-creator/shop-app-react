@@ -25,7 +25,9 @@ class ProductDetail extends React.Component<RouteComponentProps> {
       console.log("error", e);
     }
   }
+
   render() {
+    console.log(this.state.productList);
     return (
       <ErrorBoundary>
         <Row>

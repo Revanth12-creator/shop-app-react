@@ -26,10 +26,17 @@ type State = {
 class Cart extends React.Component<Props, State> {
   state: State = { reRender: false, totalAmo: 0 };
 
-  deleteCartData(id: number) {
-    this.props.deleteCartData(id); // add to cart logic
-  }
   render() {
+    const ProductId: any = [];
+    let ProductData: any = [];
+    const datas = this.props.cartItems;
+    let finalProductdata = datas.map((data: any, index: number, arr: any) => {
+      if (ProductId.includes(data.productId) === false) {
+        ProductData.push(data);
+        ProductId.push(data.productId);
+      }
+    });
+
     console.log("total", this.state.totalAmo);
 
     const submit = (e: any) => {
@@ -75,7 +82,7 @@ class Cart extends React.Component<Props, State> {
                 </tr>
               </thead>
               <tbody>
-                {this.props.cartItems.map((data: any, index: number) =>
+                {ProductData.map((data: any, index: number) =>
                   data.productQty > 0 ? (
                     <tr key={data.productId}>
                       <td>

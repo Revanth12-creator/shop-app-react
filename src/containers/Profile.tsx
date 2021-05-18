@@ -44,6 +44,7 @@ class Profile extends React.Component<Props, State> {
     console.log("address", this.state.userList);
 
     const deleteAddress = async (e: any) => {
+      window.confirm("Are you sure you want to delete this item?");
       let deleteAddressId = e.target.value;
       console.log("id", deleteAddressId);
       const url = `${constants.BASE_URL}/address/${deleteAddressId}`;
@@ -117,7 +118,10 @@ class Profile extends React.Component<Props, State> {
             <div className="d-flex ">
               <div>
                 <NavLink to={"/add"}>
-                  <button type="button" className="btn btn-success rounded">
+                  <button
+                    type="button"
+                    className="btn btn-success mx-4 rounded"
+                  >
                     Add Address{" "}
                   </button>
                 </NavLink>

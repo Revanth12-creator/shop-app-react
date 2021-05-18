@@ -10,6 +10,8 @@ import Container from "../components/Container";
 import Row from "../components/Row";
 import LoadingActions from "../store/actions/LoadingActions";
 import UserActions from "../store/actions/UserActions";
+import UserService from "../services/UserService";
+import TextBox from "../components/TextBox";
 
 type Props = {
   cartItems: CartType[];
@@ -19,47 +21,61 @@ type Props = {
 } & RouteComponentProps;
 type State = {
   reRender: boolean;
-  name: string;
-  email: string;
-  phone: number;
-  line1: string;
-  line2: string;
-  city: string;
-  state: string;
-  pincode: number;
   cardUName: string;
-  cardNo: number;
-  expiration: string;
-  cvv: number;
-  formData: any;
+  cardNo: any;
+  // expiration: string;
+  cvv: any;
+  userList: any;
+  addressData: any;
 };
 
 class Checkout extends React.Component<Props, State> {
   state: State = {
     reRender: false,
-    name: "",
-    email: "",
-    phone: 0,
-    line1: "",
-    line2: "",
-    city: "",
-    state: "",
-    pincode: 0,
     cardUName: "",
-    cardNo: 0,
-    expiration: "",
-    cvv: 0,
-    formData: [],
+    cardNo: "",
+    // expiration: "",
+    cvv: "",
+    userList: [],
+    addressData: [],
   };
+
+  async componentDidMount() {
+    try {
+      const { data } = await UserService.profile();
+      console.log("userData", data);
+      this.setState({
+        userList: data,
+        addressData: data.address,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   render() {
-    const submit = (e: any) => {
+    console.log();
+    const submit = async (e: any) => {
       e.preventDefault();
+      alert("Payment Done Successfully ");
+      const { cardUName, cardNo, cvv } = this.state;
+      const payment = await UserService.paymentPost(
+        cardUName,
+        cardNo,
+        // expiration,
+        cvv
+      );
 
       this.setState({
         reRender: true,
-        formData: this.state,
+        cardUName: this.state.cardUName,
+        cardNo: this.state.cardNo,
+        // expiration: this.state.expiration,
+        cvv: this.state.cvv,
+        userList: data,
       });
     };
+
     let finalData: number = 0;
     const data = this.props.cartItems.map((val: any) => {
       {
@@ -69,7 +85,7 @@ class Checkout extends React.Component<Props, State> {
 
     const redirecting = () => {
       if (this.state.reRender === true) {
-        return <Redirect to="/" />;
+        return <Redirect to="/products" />;
       }
     };
     return (
@@ -82,78 +98,83 @@ class Checkout extends React.Component<Props, State> {
               </h2>
               <Row>
                 <Column size={5} classes="bg-light">
-                  {redirecting}
-                  <form
-                    onSubmit={submit}
-                    className="needs-validation border  p-4 shadow-lg  rounded "
-                    noValidate
-                  >
-                    Name:
-                    <input type="text" className="form-control" required />
-                    Email Id:
-                    <input
-                      type="email"
-                      className="form-control"
-                      placeholder="Email"
-                      required
+                  <div className="mx-auto my-3">
+                    <img src="./card1.jpg" alt="" className="w-25" />
+                  </div>
+                  <h1 className="text-center fw-bold">Payment</h1>
+                  <form action="" onSubmit={submit}>
+                    {redirecting()}
+                    <TextBox
+                      placeholder={"CardName"}
+                      type={"text"}
+                      textChange={(cardUName) => this.setState({ cardUName })}
                     />
-                    Phone No.:
-                    <input type="number" className="form-control" required />
-                    Address Line 1:
-                    <input type="text" className="form-control" required />
-                    Address Line 2
-                    <input type="text" className="form-control" required />{" "}
-                    <br />
-                    <div className="">
-                      city:
-                      <input
-                        type="text"
-                        className="form-control"
-                        required
-                      />{" "}
-                      state:
-                      <input type="text" className="form-control" required />
-                      pin:
-                      <input type="number" className="form-control" required />
-                    </div>
-                    <hr className="border border-5 bg-gradient" />
-                    Name on Card
-                    <input type="text" className="form-control" required />
-                    Debit/Credit Card Number
-                    <input type="number" className="form-control" required />
-                    <br />
-                    <div className="">
-                      <label htmlFor="">Expiration:</label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="MM/YYYY"
-                        required
-                      />
-                      <label htmlFor="">CVV:</label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="XXX"
-                        required
-                      />
-                    </div>{" "}
-                    <br />
-                    <button
-                      id="btn"
-                      className="btn btn-dark  active display-6 "
-                      type="submit"
-                    >
-                      Continue to checkout
+                    <TextBox
+                      placeholder={"CardNo"}
+                      type={"number"}
+                      textChange={(cardNo) => this.setState({ cardNo })}
+                    />
+                    {/* <TextBox
+                    placeholder={"Expiration"}
+                    type={"text"}
+                    textChange={(expiration) => this.setState({ expiration })}
+                  /> */}
+                    <TextBox
+                      placeholder={"CVV"}
+                      type={"number"}
+                      textChange={(cvv) => this.setState({ cvv })}
+                    />
+                    <button className={"btn btn-dark w-100 text-uppercase"}>
+                      CheckOut{" "}
                     </button>
                   </form>
                 </Column>
-                <Column size={3} classes="offset-md-3 mt-5">
-                  <div className="mx-auto my-3">
-                    <img src="./card1.jpg" alt="" className="" />
-                  </div>
-                  <div className="card border border-3 fw-bold shadow-lg">
-                    <h2> Total Amount:{finalData}</h2>
+                <Column size={4} classes="offset-md-3 mt-5">
+                  <div className="card border border-3 shadow-lg">
+                    <h3 className="fw-bold text-dark ">
+                      Name :{" "}
+                      <span className="text-warning">
+                        {" "}
+                        {this.state.userList.userName}
+                      </span>
+                    </h3>
+                    <h3 className="fw-bold text-dark">
+                      Email :{" "}
+                      <span className="text-warning">
+                        {this.state.userList.userEmail}{" "}
+                      </span>{" "}
+                    </h3>
+                    {this.state.addressData.map((addr: any) => (
+                      <div>
+                        <h3 className="fw-bold text-dark">
+                          Address1 :{" "}
+                          <span className="text-warning">{addr.line1} </span>{" "}
+                        </h3>
+                        <h3 className="fw-bold text-dark">
+                          Address2 :{" "}
+                          <span className="text-warning">{addr.line1} </span>{" "}
+                        </h3>
+                        <h3 className="fw-bold text-dark">
+                          Address1 :{" "}
+                          <span className="text-warning">{addr.line2} </span>{" "}
+                        </h3>
+                        <h3 className="fw-bold text-dark">
+                          City :{" "}
+                          <span className="text-warning">{addr.city} </span>{" "}
+                        </h3>
+                        <h3 className="fw-bold text-dark">
+                          State :{" "}
+                          <span className="text-warning">{addr.state} </span>{" "}
+                        </h3>
+                        <h3 className="fw-bold text-dark">
+                          Pinocode :{" "}
+                          <span className="text-warning">{addr.pincode} </span>{" "}
+                        </h3>
+                      </div>
+                    ))}
+                    <div>
+                      <h2 className="fw-bold"> Total Amount:{finalData}</h2>
+                    </div>
                   </div>
                 </Column>
               </Row>

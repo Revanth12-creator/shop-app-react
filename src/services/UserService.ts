@@ -47,7 +47,25 @@ const addressPost = (line1: string, line2: string, city: string, state: string, 
   );
 };
 
+const paymentPost = (cardUName: string, cardNo: number,  cvv: number) => {
+  const url = `${constants.BASE_URL}/payment`;
+  return StorageService.getData("token").then((token) =>
+    axios.post(url, { cardUName,cardNo,cvv}, {
+      headers: { Authorization: `Bearer ${token}`, },
+    })
+  );
+};
+
+const uploadImage = (file:any) => {
+  const url = `${constants.BASE_URL}/auth/upload`;
+  return StorageService.getData("token").then((token) =>
+    axios.post(url, {file }, {
+      headers: { Authorization: `Bearer ${token}`, },
+    })
+  );
+};
 
 
 
-export default { login, profile, register, address, addressPost };
+
+export default { login, profile, register, address, addressPost ,uploadImage,paymentPost};
