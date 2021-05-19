@@ -65,7 +65,15 @@ const uploadImage = (file:any) => {
   );
 };
 
+const orderPost = () => {
+  const url = `${constants.BASE_URL}/order`;
+  return StorageService.getData("token").then((token) =>
+    axios.post(url, {}, {
+      headers: { Authorization: `Bearer ${token}`, },
+    })
+  );
+};
 
 
 
-export default { login, profile, register, address, addressPost ,uploadImage,paymentPost};
+export default { login, profile, register, address, addressPost ,uploadImage,paymentPost, orderPost};

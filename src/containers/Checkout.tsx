@@ -12,12 +12,14 @@ import LoadingActions from "../store/actions/LoadingActions";
 import UserActions from "../store/actions/UserActions";
 import UserService from "../services/UserService";
 import TextBox from "../components/TextBox";
+import CartActions from "../store/actions/CartActions";
 
 type Props = {
   cartItems: CartType[];
   deleteCartData: (id: number) => void;
   increamentQty: (id: number) => void;
   decrementQty: (id: number) => void;
+  resetCart: () => void;
 } & RouteComponentProps;
 type State = {
   reRender: boolean;
@@ -43,6 +45,7 @@ class Checkout extends React.Component<Props, State> {
   async componentDidMount() {
     try {
       const { data } = await UserService.profile();
+      const orderproduct = await UserService.orderPost();
       console.log("userData", data);
       this.setState({
         userList: data,
@@ -57,6 +60,7 @@ class Checkout extends React.Component<Props, State> {
     console.log();
     const submit = async (e: any) => {
       e.preventDefault();
+      this.props.resetCart();
       alert("Payment Done Successfully ");
       const { cardUName, cardNo, cvv } = this.state;
       const payment = await UserService.paymentPost(
@@ -191,12 +195,10 @@ const mapStoreToProps = (state: StoreType) => {
     cartItems: state.cart,
   };
 };
+
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    addressError: (err: string) => dispatch(UserActions.addressError(err)),
-    hideLoader: () => dispatch(LoadingActions.hideLoader()),
-    showLoader: () => dispatch(LoadingActions.showLoader()),
+    resetCart: () => dispatch(CartActions.resetCart()),
   };
 };
-
 export default connect(mapStoreToProps, mapDispatchToProps)(Checkout);

@@ -13,6 +13,7 @@ import LoadingActions from "../store/actions/LoadingActions";
 import UserActions from "../store/actions/UserActions";
 import formatter from "../utils/formatter";
 import LoadingWrapper from "../components/LoadingWrapper";
+import emailjs from "emailjs-com";
 
 type RegisterProps = {
   registerError: (error: string) => void;
@@ -22,17 +23,34 @@ type RegisterProps = {
 } & RouteComponentProps;
 type RegisterState = {
   name: string;
-  email: string;
+  email: any;
   password: string;
   redirect: boolean;
 };
 class Register extends React.Component<RegisterProps> {
   state: RegisterState = { name: "", email: "", password: "", redirect: false };
-  register = async (e: SyntheticEvent) => {
+  register = async (e: any) => {
     try {
       e.preventDefault();
       const { name, email, password } = this.state;
       const { data } = await UserService.register(name, email, password);
+
+      emailjs
+        .sendForm(
+          "service_tj968wl",
+          " template_loko85k",
+          e.target,
+          "user_RnekFRahgNPIDbYUaymbo"
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+
       this.props.showLoader();
       this.props.hideLoader();
       this.props.history.push("/login");
@@ -64,6 +82,7 @@ class Register extends React.Component<RegisterProps> {
               <TextBox
                 placeholder={"Email"}
                 type={"email"}
+                // name={"email"}
                 textChange={(email) => this.setState({ email })}
               />
               <TextBox
