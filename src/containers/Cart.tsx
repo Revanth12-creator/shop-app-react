@@ -10,7 +10,6 @@ import Container from "../components/Container";
 import Row from "../components/Row";
 import { Dispatch } from "redux";
 import CartActions from "../store/actions/CartActions";
-import CartDesign from "../components/CartDesign";
 import UserService from "../services/UserService";
 type Props = {
   cartItems: CartType[];

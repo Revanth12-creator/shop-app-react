@@ -37,7 +37,7 @@ class Register extends React.Component<RegisterProps> {
 
       emailjs
         .sendForm(
-          "service_tj968wl",
+          "service_cjk0tzd",
           " template_loko85k",
           e.target,
           "user_RnekFRahgNPIDbYUaymbo"

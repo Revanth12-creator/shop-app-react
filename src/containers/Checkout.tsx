@@ -27,6 +27,9 @@ type State = {
   cardNo: any;
   // expiration: string;
   cvv: any;
+  amount: number;
+  qty: number;
+  OSDate: number;
   userList: any;
   addressData: any;
 };
@@ -38,6 +41,9 @@ class Checkout extends React.Component<Props, State> {
     cardNo: "",
     // expiration: "",
     cvv: "",
+    amount: 0,
+    qty: 0,
+    OSDate: 0,
     userList: [],
     addressData: [],
   };
@@ -45,7 +51,7 @@ class Checkout extends React.Component<Props, State> {
   async componentDidMount() {
     try {
       const { data } = await UserService.profile();
-      const orderproduct = await UserService.orderPost();
+      // const orderproduct = await UserService.orderPost();
       console.log("userData", data);
       this.setState({
         userList: data,
@@ -56,11 +62,26 @@ class Checkout extends React.Component<Props, State> {
     }
   }
 
+  async orders() {
+    try {
+      const { amount, qty, OSDate } = this.state;
+      const orderproduct = await UserService.orderPost(amount, qty, OSDate);
+      this.setState({
+        reRender: true,
+        amount: this.state.amount,
+        qty: this.state.qty,
+        OSDate: this.state.OSDate,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   render() {
     console.log();
     const submit = async (e: any) => {
       e.preventDefault();
-      this.props.resetCart();
+      // this.props.resetCart();
       alert("Payment Done Successfully ");
       const { cardUName, cardNo, cvv } = this.state;
       const payment = await UserService.paymentPost(
@@ -71,7 +92,6 @@ class Checkout extends React.Component<Props, State> {
       );
 
       this.setState({
-        reRender: true,
         cardUName: this.state.cardUName,
         cardNo: this.state.cardNo,
         // expiration: this.state.expiration,
@@ -89,7 +109,7 @@ class Checkout extends React.Component<Props, State> {
 
     const redirecting = () => {
       if (this.state.reRender === true) {
-        return <Redirect to="/products" />;
+        return <Redirect to="/orderDetails" />;
       }
     };
     return (
@@ -128,7 +148,12 @@ class Checkout extends React.Component<Props, State> {
                       type={"number"}
                       textChange={(cvv) => this.setState({ cvv })}
                     />
-                    <button className={"btn btn-dark w-100 text-uppercase"}>
+                    <button
+                      className={"btn btn-dark w-100 text-uppercase"}
+                      onClick={() => {
+                        this.orders();
+                      }}
+                    >
                       CheckOut{" "}
                     </button>
                   </form>

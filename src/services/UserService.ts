@@ -65,15 +65,25 @@ const uploadImage = (file:any) => {
   );
 };
 
-const orderPost = () => {
+const orderPost = (amount:number, qty:number, OSDate:number) => {
   const url = `${constants.BASE_URL}/order`;
   return StorageService.getData("token").then((token) =>
-    axios.post(url, {}, {
+    axios.post(url, {amount, qty, OSDate}, {
       headers: { Authorization: `Bearer ${token}`, },
     })
   );
 };
 
 
+const orderGet = () => {
+  const url = `${constants.BASE_URL}/order`;
+  return StorageService.getData("token").then((token) =>
+    axios.get(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+  );
+};
 
-export default { login, profile, register, address, addressPost ,uploadImage,paymentPost, orderPost};
+
+
+export default { login, profile, register, address,orderGet, addressPost ,uploadImage,paymentPost, orderPost};

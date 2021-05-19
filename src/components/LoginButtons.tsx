@@ -18,7 +18,9 @@ const LoginButtons: React.FC = (props) => {
         <Link className="btn btn-link" to={"/profile"}>
           Profile
         </Link>
-
+        <Link className="btn btn-link" to={"/orderDetails"}>
+          OrderDetails
+        </Link>
         <button
           className="btn btn-sm btn-outline-primary mx-2"
           onClick={() => {
