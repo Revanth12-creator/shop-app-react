@@ -10,7 +10,7 @@ const login = (email: string, password: string) => {
     .post<LoginResponseType>(url, { email, password })
     .catch((e) => Promise.reject(e.response.data));
 };
-
+  
 const register = (name: string, email: string, password: string) => {
   const url = `${constants.BASE_URL}/auth/register`;
   return axios

@@ -97,15 +97,9 @@ class Profile extends React.Component<Props, State> {
           <div className="row ">
             <div className="col-md-4 p-5 bg-secondary">
               <div className="">
-                {/* <img
-                  src="./user.jpg "
-                  alt="img"
-                  className="rounded-circle  mx-auto"
-                /> */}
                 <div className="profileImage  " id="profileImage">
                   <img
                     src={this.state.profileImage}
-                    // alt="Profile Image"
                     className="img-thumbnail rounded-circle"
                   />
                   <h3 className="mx-auto fw-bold  bg-info rounded">
@@ -115,12 +109,6 @@ class Profile extends React.Component<Props, State> {
                       onClick={this.iconClicked}
                     ></i>
                   </h3>{" "}
-                  {/* <img
-                    src="./user.jpg "
-                    alt="img"
-                    className="rounded-circle  mx-auto"
-                    onClick={this.iconClicked}
-                  /> */}
                   {this.state.hide ? null : (
                     <PorfileUpload getData={this.getData} />
                   )}
@@ -137,17 +125,6 @@ class Profile extends React.Component<Props, State> {
                   </button>
                 </div>
               </NavLink>
-
-              {/* <NavLink to={"/resume"}>
-                <div className="mx-3">
-                  <button
-                    type="button"
-                    className="btn btn-dark  text-light rounded"
-                  >
-                    Upload Resume
-                  </button>
-                </div>
-              </NavLink> */}
             </div>
             <div className="col-md-8 p-5 ">
               <div className="card">

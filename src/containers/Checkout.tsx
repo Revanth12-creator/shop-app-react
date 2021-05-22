@@ -131,15 +131,17 @@ class Checkout extends React.Component<Props, State> {
         <Container>
           <Row>
             <Column size={12}>
-              <h2 className="  text-dark fw-bold fs-3 p-2 text-center   mb-3">
+              <h2 className="  text-dark fw-bold fs-3 p-2 text-center bg-danger  mb-3">
                 Billing Details
               </h2>
               <Row>
-                <Column size={5} classes="bg-light">
+                <Column size={4} classes="bg-light">
                   <div className="mx-auto my-3">
                     <img src="./card1.jpg" alt="" className="w-25" />
                   </div>
-                  <h1 className="text-center fw-bold">Payment</h1>
+                  <h1 className="text-center text-secondary fw-bold">
+                    Payment
+                  </h1>
                   <form action="" onSubmit={submit}>
                     {redirecting()}
                     <TextBox
@@ -163,7 +165,7 @@ class Checkout extends React.Component<Props, State> {
                       textChange={(cvv) => this.setState({ cvv })}
                     />
                     <button
-                      className={"btn btn-dark w-100 text-uppercase"}
+                      className={"btn btn-warning w-100 text-uppercase"}
                       onClick={() => {
                         this.orders();
                       }}
@@ -173,50 +175,60 @@ class Checkout extends React.Component<Props, State> {
                   </form>
                 </Column>
                 <Column size={4} classes="offset-md-3 mt-5">
-                  <div className="card border border-3 shadow-lg">
+                  <h1>AddressDetails</h1>
+                  <hr />
+                  <div className="card">
                     <h3 className="fw-bold text-dark ">
-                      Name :{" "}
-                      <span className="text-warning">
+                      Name:{" "}
+                      <span className="text-info">
                         {" "}
                         {this.state.userList.userName}
                       </span>
                     </h3>
                     <h3 className="fw-bold text-dark">
                       Email :{" "}
-                      <span className="text-warning">
+                      <span className="text-info">
                         {this.state.userList.userEmail}{" "}
                       </span>{" "}
                     </h3>
+
                     {this.state.addressData.map((addr: any) => (
                       <div>
                         <h3 className="fw-bold text-dark">
                           Address1 :{" "}
-                          <span className="text-warning">{addr.line1} </span>{" "}
+                          <span className="text-info">{addr.line1} </span>{" "}
                         </h3>
                         <h3 className="fw-bold text-dark">
                           Address2 :{" "}
-                          <span className="text-warning">{addr.line1} </span>{" "}
+                          <span className="text-info">{addr.line1} </span>{" "}
                         </h3>
                         <h3 className="fw-bold text-dark">
                           Address1 :{" "}
-                          <span className="text-warning">{addr.line2} </span>{" "}
+                          <span className="text-info">{addr.line2} </span>{" "}
                         </h3>
                         <h3 className="fw-bold text-dark">
-                          City :{" "}
-                          <span className="text-warning">{addr.city} </span>{" "}
+                          City : <span className="text-info">{addr.city} </span>{" "}
                         </h3>
                         <h3 className="fw-bold text-dark">
                           State :{" "}
-                          <span className="text-warning">{addr.state} </span>{" "}
+                          <span className="text-info">{addr.state} </span>{" "}
                         </h3>
                         <h3 className="fw-bold text-dark">
                           Pinocode :{" "}
-                          <span className="text-warning">{addr.pincode} </span>{" "}
+                          <span className="text-info">{addr.pincode} </span>{" "}
                         </h3>
                       </div>
                     ))}
+                    <hr />
                     <div>
-                      <h2 className="fw-bold"> Total Amount:{finalData}</h2>
+                      <h2 className="fw-bold">
+                        {" "}
+                        <span className="text-danger">
+                          {" "}
+                          Total Amount:<i className="fas fa-rupee-sign"></i>
+                          {finalData}
+                        </span>{" "}
+                      </h2>
                     </div>
                   </div>
                 </Column>

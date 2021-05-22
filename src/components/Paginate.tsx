@@ -6,7 +6,12 @@ type Props = {
   changePage: (pageno: number) => void;
   itemCountPerPage: number;
 };
-const Paginate: React.FC<Props> = ({ totalPages, currentPage, changePage, itemCountPerPage, }) => {
+const Paginate: React.FC<Props> = ({
+  totalPages,
+  currentPage,
+  changePage,
+  itemCountPerPage,
+}) => {
   const [selected, setSelected] = useState(0);
   const pages = Array(totalPages).fill(0);
   return (
@@ -14,8 +19,9 @@ const Paginate: React.FC<Props> = ({ totalPages, currentPage, changePage, itemCo
       {pages.map((p, i) => (
         <button
           type="button"
-          className={`btn btn-sm ${selected === i ? "btn-primary" : "btn-outline-primary"
-            }`}
+          className={`btn btn-sm ${
+            selected === i ? "btn-primary" : "btn-outline-primary"
+          }`}
           key={i}
           onClick={() => {
             changePage(i + 1);
