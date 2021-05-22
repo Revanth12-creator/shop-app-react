@@ -34,14 +34,13 @@ class Login extends React.Component<LoginProps, LoginState> {
       await StorageService.storeData("token", data.access_token);
       this.props.signinSuccess(data); // create/store session
       this.props.hideLoader();
-
     } catch (e) {
       this.props.signinError(formatter.titlecase(e.message.toString()));
       this.props.hideLoader();
     }
   };
   render() {
-    console.log(this.props.signinError)
+    console.log(this.props.signinError);
     if (this.props.isAuthenticated) {
       let lastPage = "/"; // by default home page
       const state: any = this.props.location.state;
@@ -89,6 +88,7 @@ const mapStoreDataToProps = (storeData: StoreType) => {
     errorMessage: storeData.userSession.error,
   };
 };
+
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     signinSuccess: (user: object) => dispatch(UserActions.loginSuccess(user)),

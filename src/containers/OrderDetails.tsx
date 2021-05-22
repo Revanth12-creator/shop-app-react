@@ -11,9 +11,10 @@ type Props = {
 };
 type State = {
   orderData: any;
+  orderAmount: any;
 };
 class OrderDetails extends React.Component<Props, State> {
-  state: State = { orderData: [] };
+  state: State = { orderData: [], orderAmount: 0 };
   async componentDidMount() {
     try {
       const { data } = await UserService.orderGet();
@@ -26,14 +27,9 @@ class OrderDetails extends React.Component<Props, State> {
     }
   }
   render() {
-    console.log("state orders", this.state.orderData);
+    console.log("state orders", this.state.orderData.orderAmount);
 
-    let finalData: number = 0;
-    const data = this.props.cartItems.map((val: any) => {
-      {
-        finalData = finalData + val.productSalePrice * val.productQty;
-      }
-    });
+    console.log(this.state.orderData.orderAmount);
     return (
       <Container>
         <Row>
@@ -42,7 +38,7 @@ class OrderDetails extends React.Component<Props, State> {
               <div>
                 <h1>{data.productId.productName}</h1>
                 <img src={data.productId.productImage} alt="" />
-                <h2>{finalData}</h2>
+                <h2>TotalAmount{data.orderAmount}</h2>
               </div>
             ))}
           </Column>

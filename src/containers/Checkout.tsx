@@ -30,6 +30,7 @@ type State = {
   amount: number;
   qty: number;
   OSDate: number;
+  productId: number;
   userList: any;
   addressData: any;
 };
@@ -41,9 +42,12 @@ class Checkout extends React.Component<Props, State> {
     cardNo: "",
     // expiration: "",
     cvv: "",
+
     amount: 0,
     qty: 0,
     OSDate: 0,
+    productId: 0,
+
     userList: [],
     addressData: [],
   };
@@ -51,7 +55,6 @@ class Checkout extends React.Component<Props, State> {
   async componentDidMount() {
     try {
       const { data } = await UserService.profile();
-      // const orderproduct = await UserService.orderPost();
       console.log("userData", data);
       this.setState({
         userList: data,
@@ -64,13 +67,19 @@ class Checkout extends React.Component<Props, State> {
 
   async orders() {
     try {
-      const { amount, qty, OSDate } = this.state;
-      const orderproduct = await UserService.orderPost(amount, qty, OSDate);
+      const { amount, qty, OSDate, productId } = this.state;
+      const orderproduct = await UserService.orderPost(
+        amount,
+        qty,
+        OSDate,
+        productId
+      );
       this.setState({
         reRender: true,
         amount: this.state.amount,
         qty: this.state.qty,
         OSDate: this.state.OSDate,
+        productId: this.state.productId,
       });
     } catch (e) {
       console.log(e);
@@ -78,10 +87,11 @@ class Checkout extends React.Component<Props, State> {
   }
 
   render() {
-    console.log();
+    console.log("orderamount", this.state.amount);
+    console.log("orderProduct", this.state.productId);
     const submit = async (e: any) => {
       e.preventDefault();
-      // this.props.resetCart();
+      this.props.resetCart();
       alert("Payment Done Successfully ");
       const { cardUName, cardNo, cvv } = this.state;
       const payment = await UserService.paymentPost(
@@ -101,11 +111,15 @@ class Checkout extends React.Component<Props, State> {
     };
 
     let finalData: number = 0;
-    const data = this.props.cartItems.map((val: any) => {
-      {
-        finalData = finalData + val.productSalePrice * val.productQty;
-      }
-    });
+    const data = this.props.cartItems.map((val: any) => (
+      <p style={{ display: "none" }}>
+        {(finalData = finalData + val.productSalePrice * val.productQty)}
+
+        {(this.state.amount = val.productSalePrice * val.productQty)}
+        {(this.state.productId = val.productId)}
+        {(this.state.qty = val.productQty)}
+      </p>
+    ));
 
     const redirecting = () => {
       if (this.state.reRender === true) {
